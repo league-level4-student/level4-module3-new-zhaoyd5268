@@ -22,8 +22,15 @@ public class SpiesOnATrain {
      * statements.
      */
     String findIntel(LinkedList<TrainCar> train, String[] clues) {
-
-        return "";
+    	String suspect = "Lemmy";
+    	train.print();
+    	for(int i = 0; i < clues.length; i++) {
+    		System.out.println(clues[i]);
+    	}
+    	String s = train.getHead().getValue().questionPassenger();
+    	String newS = s.substring(56);
+    	System.out.println(newS);
+        return suspect;
 
     }
 

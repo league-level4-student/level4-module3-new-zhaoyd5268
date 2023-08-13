@@ -1,135 +1,147 @@
 package _00_Intro_to_Linked_Lists;
 
-public class NewLinkedList <W> {
+public class NewLinkedList<W> {
 
-    /*
-     * The head and tail contain references that point to the first and last
-     * elements of the LinkedList respectively.
-     * 
-     * These must be updated if elements are headed to the front or back, but
-     * allow for easy entry points into the LinkedList.
-     */
-    private Node<String> head;
-    private Node<String> tail;
+	/*
+	 * The head and tail contain references that point to the first and last
+	 * elements of the LinkedList respectively.
+	 * 
+	 * These must be updated if elements are headed to the front or back, but allow
+	 * for easy entry points into the LinkedList.
+	 */
+	private Node<String> head;
 
-    public void add(String value) {
+	public static void main(String[] args) {
+		LinkedList<String> list = new LinkedList<String> ();
+		list.add("Watermeloan");
+		list.add("Cheerry");
+		list.add("Manngo");
+		list.add("Bluebeery");
+		System.out.println("Before removal: ");
+		list.print();
+		list.remove(1);
+		System.out.println("After removal: ");
+		list.print();
+		System.out.println("After list for loop changing");
+		list.getHead().setValue("virus");
+		list.print();
+		list.getHead().getNext().setValue("virus");
+		list.print();
+		list.getHead().getNext().getNext().setValue("virus");
+		list.print();
+		System.out.println("After making all uppercase:");
+		String value1 = list.getHead().getValue().toString().toUpperCase();
+		String value2 = list.getHead().getNext().getValue().toString().toUpperCase();
+		String value3 = list.getHead().getNext().getNext().getValue().toString().toUpperCase();
+		list.getHead().setValue(value1);
+		list.getHead().getNext().setValue(value2);
+		list.getHead().getNext().getNext().setValue(value3);
+		list.print();
+	}
 
-        if (head == null) {
-            head = new Node<String>(value);
-        } else {
+	public void add(String value) {
 
-            Node<String> prev = head;
-            Node<String> next = head.getNext();
-            Node <String> middle = head.getNext().getNext();
-            while (next != null) {
-                prev = prev.getNext();
-                next = next.getNext();
-                middle = middle.getNext();
-            }
+		if (head == null) {
+			head = new Node<String>(value);
+		} else {
 
-            next = new Node<String>(value);
-            prev.setNext(next);
-            next.setPrev(prev);
-            middle.setPrev(next);
-            
-            tail = next;
-        }
-    }
+			Node<String> next = head.getNext();
+			Node<String> middle = head.getNext().getNext();
+			while (next != null) {
+				next = next.getNext();
+			}
 
-    public void remove(int position) {
+			next = new Node<String>(value);
+			middle.setPrev(next);
 
-        if (head == null) {
-            System.out.println("No items to remove!");
-        } else if (position == 0) {
+		}
+	}
 
-            head = head.getNext();
+	public void remove(int position) {
 
-            if (head != null) {
-                head.setPrev(null);
-            }
+		if (head == null) {
+			System.out.println("No items to remove!");
+		} else if (position == 0) {
 
-        } else {
+			head = head.getNext();
 
-            int positionCounter = 1;
-            Node<String> prev = head;
-            Node<String> next = head.getNext();
+			if (head != null) {
+				head.setPrev(null);
+			}
 
-            while (positionCounter < position) {
+		} else {
 
-                prev = prev.getNext();
-                next = next.getNext();
-                positionCounter++;
+			int positionCounter = 1;
+			Node<String> prev = head;
+			Node<String> next = head.getNext();
 
-            }
+			while (positionCounter < position) {
 
-            if (positionCounter == position && next != null) {
+				prev = prev.getNext();
+				next = next.getNext();
+				positionCounter++;
 
-                next = next.getNext();
-                prev.setNext(next);
+			}
 
-                if (next != null) {
-                    next.setPrev(prev);
-                }
-            } else {
-                System.out.println("Position not found!");
-            }
-        }
+			if (positionCounter == position && next != null) {
 
-    }
+				next = next.getNext();
+				prev.setNext(next);
 
-    public void print() {
-        if (head == null) {
-            System.out.println("No items in list!");
-        } else {
+				if (next != null) {
+					next.setPrev(prev);
+				}
+			} else {
+				System.out.println("Position not found!");
+			}
+		}
 
-            Node<String> next = head;
+	}
 
-            while (next != null) {
+	public void print() {
+		if (head == null) {
+			System.out.println("No items in list!");
+		} else {
 
-                System.out.print(next.getValue().toString() + " <-> ");
-                next = next.getNext();
+			Node<String> next = head;
 
-            }
+			while (next != null) {
 
-            System.out.println();
+				System.out.print(next.getValue().toString() + " <-> ");
+				next = next.getNext();
 
-        }
+			}
 
-    }
+			System.out.println();
 
-    public int size() {
-        int size = 0;
-        if (head != null) {
+		}
 
-            Node<String> next = head;
+	}
 
-            while (next != null) {
+	public int size() {
+		int size = 0;
+		if (head != null) {
 
-                next = next.getNext();
-                size++;
+			Node<String> next = head;
 
-            }
+			while (next != null) {
 
-        }
-        return size;
+				next = next.getNext();
+				size++;
 
-    }
+			}
 
-    public Node<String> getHead() {
-        return head;
-    }
+		}
+		return size;
 
-    public Node<String> getTail() {
-        return tail;
-    }
+	}
 
-    public void setHead(Node<String> head) {
-        this.head = head;
-    }
+	public Node<String> getHead() {
+		return head;
+	}
 
-    public void setTail(Node<String> tail) {
-        this.tail = tail;
-    }
+	public void setHead(Node<String> head) {
+		this.head = head;
+	}
 
-	
 }
