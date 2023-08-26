@@ -24,32 +24,32 @@ public class SpiesOnATrain {
 	String findIntel(LinkedList<TrainCar> train, String[] clues) {
 		String suspect = "";
 		Node<TrainCar> whatOn = train.getHead();
-		for (int j = 0; j < 14; j++) {
-			train.print();
-			for (int i = 0; i < clues.length; i++) {
-				System.out.println(clues[i]);
-			}
-			String s = whatOn.getValue().questionPassenger();
-			System.out.println(s);
-			String[] newS = s.split("I saw ");
-			String[] nameAndEvidence = newS[1].split(" ");
-			String[] EvidenceArray = newS[1].split(nameAndEvidence[0]);
-			String Evidence = EvidenceArray[1].trim();
-			System.out.println(Evidence);
-			for (int i = 0; i < clues.length; i++) {
-				if (Evidence.equalsIgnoreCase(clues[i])) {
-					suspect = EvidenceArray[0];
-					
-				} else {
-					System.out.println(suspect);
-
+		for (int k = 0; k < train.size(); k++) {
+			for (int j = 0; j < train.size(); j++) {
+				train.print();
+				for (int i = 0; i < clues.length; i++) {
+					System.out.println(clues[i]);
 				}
-
+				String st = whatOn.getValue().questionPassenger();
+				System.out.println(st);
+				String[] newS = st.split("I saw ");
+				String[] EvidenceArray = newS[1].split(" ");
+				String evidence = EvidenceArray[1];
+				for (int i = 1; i < EvidenceArray.length - 1; i++) {
+					evidence = evidence + " " + EvidenceArray[i + 1];
+				}
+				evidence = evidence.replace(".", "");
+				System.out.println(evidence);
+				for (int i = 0; i < clues.length; i++) {
+					if (evidence.equalsIgnoreCase(clues[i])) {
+						suspect = EvidenceArray[0];
+					}
+				}
+				whatOn = whatOn.getNext();
 			}
-			
-			whatOn = whatOn.getNext();
-			
+			System.out.println(suspect);
 		}
+		System.out.println(suspect);
 		return suspect;
 	}
 }
