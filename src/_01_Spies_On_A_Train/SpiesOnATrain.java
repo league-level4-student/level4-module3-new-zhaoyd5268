@@ -1,5 +1,6 @@
 package _01_Spies_On_A_Train;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import _00_Intro_to_Linked_Lists.LinkedList;
@@ -22,34 +23,43 @@ public class SpiesOnATrain {
 	 * statements.
 	 */
 	String findIntel(LinkedList<TrainCar> train, String[] clues) {
-		String suspect = "";
+		String suspect = "noofin happened";
 		Node<TrainCar> whatOn = train.getHead();
-		for (int k = 0; k < train.size(); k++) {
-			for (int j = 0; j < train.size(); j++) {
-				train.print();
-				for (int i = 0; i < clues.length; i++) {
-					System.out.println(clues[i]);
-				}
-				String st = whatOn.getValue().questionPassenger();
-				System.out.println(st);
-				String[] newS = st.split("I saw ");
-				String[] EvidenceArray = newS[1].split(" ");
-				String evidence = EvidenceArray[1];
-				for (int i = 1; i < EvidenceArray.length - 1; i++) {
-					evidence = evidence + " " + EvidenceArray[i + 1];
-				}
-				evidence = evidence.replace(".", "");
-				System.out.println(evidence);
-				for (int i = 0; i < clues.length; i++) {
-					if (evidence.equalsIgnoreCase(clues[i])) {
-						suspect = EvidenceArray[0];
+		HashMap<String, Integer> h = new HashMap<String, Integer>();
+		ArrayList<String> listOfSuspects = new ArrayList<String>();
+		for (int j = 0; j < train.size(); j++) {
+			String st = whatOn.getValue().questionPassenger();
+			String[] newS = st.split("I saw ");
+			String[] EvidenceArray = newS[1].split(" ");
+			String evidence = EvidenceArray[1];
+			for (int i = 1; i < EvidenceArray.length - 1; i++) {
+				evidence = evidence + " " + EvidenceArray[i + 1];
+			}
+			evidence = evidence.replace(".", "");
+			for (int i = 0; i < clues.length; i++) {
+				if (evidence.equalsIgnoreCase(clues[i])) {
+					if (h.containsKey(EvidenceArray[0])) {
+						int newnumber = h.get(EvidenceArray[0]);
+						h.put(EvidenceArray[0], newnumber+1);
+					} else {
+						listOfSuspects.add(EvidenceArray[0]);
+						h.put(EvidenceArray[0], 0);
 					}
+
 				}
+			}
+			
+			if (whatOn.getNext() != null) {
 				whatOn = whatOn.getNext();
 			}
-			System.out.println(suspect);
+
+			
 		}
-		System.out.println(suspect);
+		for (int i = 0; i < h.size(); i++) {
+			if (h.get(listOfSuspects.get(i)) == 2) {
+				suspect = listOfSuspects.get(i);
+			}
+		}
 		return suspect;
 	}
 }
