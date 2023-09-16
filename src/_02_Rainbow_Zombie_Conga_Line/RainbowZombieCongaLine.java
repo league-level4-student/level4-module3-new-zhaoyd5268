@@ -53,22 +53,17 @@ public class RainbowZombieCongaLine {
 	// Place the zombie at the designated position in the conga line!
 	public void jumpInTheLine(Zombie dancer, int position) {
 		Node<Zombie> currentNode = congaLine.getHead();
-		Node<Zombie> aheadNode = congaLine.getHead();
 		Node<Zombie> whatOn = congaLine.getHead();
 		Node<Zombie> d = new Node<Zombie>(dancer);
 
-		for (int i = 0; i < position - 1; i++) {
+		for (int i = 0; i < position; i++) {
 			currentNode = whatOn;
 			whatOn = whatOn.getNext();
 		}
-		whatOn = congaLine.getHead();
-		for (int i = 0; i < congaLine.size() - position - 1; i++) {
-			aheadNode = whatOn;
-			whatOn = whatOn.getNext();
-		}
 		d.setPrev(currentNode);
-		d.setNext(aheadNode);
-
+		d.setNext(whatOn);
+		currentNode.setNext(d);
+		whatOn.setPrev(d);
 	}
 
 	/*
@@ -115,6 +110,7 @@ public class RainbowZombieCongaLine {
 		d.setNext(head);
 		head.setPrev(d);
 		congaLine.setTail(d1);
+		tail.setNext(d1);
 		d1.setPrev(tail);
 		jumpInTheLine(dancer, congaLine.size() / 2);
 	}
