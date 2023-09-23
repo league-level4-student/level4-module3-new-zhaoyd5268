@@ -34,27 +34,29 @@ public class BinaryTreeDemo {
 
     public static void main(String[] args) {
     	BinaryTree <String> bt = new BinaryTree <String> ();
-    	String root = "root";
-    	String babLroot = "bLoot";
-    	String babRroot = "bRoot";
+    	String root = "JROOT";
+    	String babLroot = "AROOT";
+    	String babRroot = "ZROOT";
     	Node <String> n = new Node <String> (root);
     	Node <String> n1 = new Node <String> (babLroot);
     	Node <String> n2 = new Node <String> (babRroot);
-    	bt.insert(n.getValue());
-    	bt.insert(babLroot);
-    	bt.insert(babRroot);
     	n.setLeft(n1);
     	n.setRight(n2);
+    	bt.insert(root);
+    	bt.insert(babLroot);
+    	bt.insert(babRroot);
     	System.out.println(bt.getRoot().getValue());
-    	Boolean running = true;
-    	while (running == true) {
-    		helpmepls(bt.getRoot());
-    	}
+    	System.out.println(bt.search("bLoot"));
+    	helpmepls(bt.getRoot());
+    	bt.printHorizontal();
     }
     public static void helpmepls(Node <String> hmp) {
-    	hmp.setValue("oof");
-    	helpmepls(hmp.getLeft());
-    	helpmepls(hmp.getRight());
+    	if (hmp != null) {
+    		hmp.setValue("oof!");
+    		helpmepls(hmp.getLeft());
+        	helpmepls(hmp.getRight());
+    	}
+    	
     }
 
 }
